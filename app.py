@@ -267,31 +267,26 @@ class Generator(nn.Module):
 # ============================================================
 # LOAD MODEL
 # ============================================================
-
 @st.cache_resource
 def load_model():
 
     MODEL_PATH = "final_generator.pth"
 
-if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=1rU9SR5Cqq_Co790S9mmTrND_3h64Aqfx"
-    gdown.download(url, MODEL_PATH, quiet=False)
+    if not os.path.exists(MODEL_PATH):
+        url = "https://drive.google.com/uc?id=1rU9SR5Cqq_Co790S9mmTrND_3h64Aqfx"
+        gdown.download(url, MODEL_PATH, quiet=False)
 
     model = Generator()
 
     model.load_state_dict(
         torch.load(
-            "final_generator.pth",
+            MODEL_PATH,
             map_location=DEVICE
         )
     )
 
     model.eval()
-
     return model
-
-generator = load_model()
-
 # ============================================================
 # IMAGE TRANSFORMS
 # ============================================================
